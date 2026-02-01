@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo do Impostor</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>🎭 Jogo do Impostor</h1>
+        <p class="subtitle">Descubra quem é o impostor!</p>
+    </header>
+
+    <!-- Mensagens de erro/sucesso -->
+    <div th:if="${error}" class="alert alert-error">
+        <p th:text="${error}"></p>
+    </div>
+
+    <div th:if="${success}" class="alert alert-success">
+        <p th:text="${success}"></p>
+    </div>
+
+    <div class="main-content">
+        <!-- Criar Nova Sala -->
+        <div class="card">
+            <h2>🎮 Criar Nova Sala</h2>
+            <form th:action="@{/room/create}" method="post">
+                <div class="form-group">
+                    <label for="createRoomName">Nome da Sala:</label>
+                    <input type="text"
+                           id="createRoomName"
+                           name="roomName"
+                           placeholder="Ex: Sala dos Amigos"
+                           required
+                           maxlength="50">
+                </div>
+
+                <div class="form-group">
+                    <label for="createPlayerName">Seu Nome:</label>
+                    <input type="text"
+                           id="createPlayerName"
+                           name="playerName"
+                           placeholder="Digite seu nome"
+                           required
+                           maxlength="20">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Criar Sala</button>
+            </form>
+        </div>
+
+        <!-- Divisor -->
+        <div class="divider">
+            <span>OU</span>
+        </div>
+
+        <!-- Entrar em Sala Existente -->
+        <div class="card">
+            <h2>🚪 Entrar em uma Sala</h2>
+            <form th:action="@{/room/join}" method="post">
+                <div class="form-group">
+                    <label for="joinRoomCode">Código da Sala:</label>
+                    <input type="text"
+                           id="joinRoomCode"
+                           name="roomCode"
+                           placeholder="Ex: A1B2"
+                           required
+                           maxlength="4"
+                           style="text-transform: uppercase;">
+                </div>
+
+                <div class="form-group">
+                    <label for="joinPlayerName">Seu Nome:</label>
+                    <input type="text"
+                           id="joinPlayerName"
+                           name="playerName"
+                           placeholder="Digite seu nome"
+                           required
+                           maxlength="20">
+                </div>
+
+                <button type="submit" class="btn btn-secondary">Entrar na Sala</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>Como jogar: Descubra quem é o impostor através de perguntas sobre a palavra secreta!</p>
+    </footer>
+</div>
+
+<script>
+    // Auto uppercase no código da sala
+    document.getElementById('joinRoomCode').addEventListener('input', function(e) {
+        e.target.value = e.target.value.toUpperCase();
+    });
+</script>
+</body>
+</html>
