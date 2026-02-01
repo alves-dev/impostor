@@ -1,0 +1,25 @@
+schema: v1
+
+repository:
+  title: Impostor
+  description: Uma aplicação web simples para o jogo impostor
+  license: NO-LICENSE
+  type: code
+  topics:
+    - java
+    - spring
+    - thymeleaf
+  website: https://impostor.alves-dev.com
+
+project:
+  status: development
+  stack:
+    language: java
+    framework: spring
+    database:
+    protocols:
+    tools:
+      - docker
+      - thymeleaf
+      - gradle
+      - websockets
