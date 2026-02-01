@@ -52,6 +52,11 @@ const elements = {
 
 // Conectar ao WebSocket quando a página carregar
 window.addEventListener('DOMContentLoaded', function() {
+    console.log('Página carregada. Player ID:', PLAYER_ID, 'Is Owner:', IS_OWNER);
+
+    // Mostrar estado inicial (WAITING_PLAYERS por padrão)
+    updateGameStateUI('WAITING_PLAYERS');
+
     connectWebSocket();
     setupEventListeners();
 });
@@ -104,6 +109,10 @@ function subscribeToTopics() {
         const error = message.body;
         alert('Erro: ' + error);
     });
+
+    // Após se inscrever, solicita o estado atual da sala
+    console.log('Solicitando estado atual da sala...');
+    requestCurrentState();
 }
 
 // Configurar event listeners dos botões
@@ -130,6 +139,10 @@ function updateConnectionStatus(status, text) {
 // Atualizar estado da sala
 function handleRoomStateUpdate(state) {
     console.log('Estado da sala atualizado:', state);
+    console.log('Game State:', state.gameState);
+    console.log('Players:', state.players);
+    console.log('Current Round:', state.currentRound, '/', state.totalRounds);
+
     roomState = state;
     currentGameState = state.gameState;
 
@@ -146,6 +159,8 @@ function handleRoomStateUpdate(state) {
 
 // Atualizar UI baseado no estado do jogo
 function updateGameStateUI(gameState) {
+    console.log('Atualizando UI para estado:', gameState);
+
     // Esconder todos os estados
     Object.values(elements).forEach(el => {
         if (el && el.classList && el.classList.contains('game-state')) {
@@ -156,22 +171,29 @@ function updateGameStateUI(gameState) {
     // Mostrar o estado atual
     switch(gameState) {
         case 'WAITING_PLAYERS':
+            console.log('Mostrando WAITING_PLAYERS');
             elements.waitingPlayers.style.display = 'block';
             break;
         case 'ROUND_STARTED':
+            console.log('Mostrando ROUND_STARTED');
             elements.roundStarted.style.display = 'block';
             break;
         case 'VOTING':
+            console.log('Mostrando VOTING');
             elements.voting.style.display = 'block';
             renderVotingButtons();
             break;
         case 'ROUND_FINISHED':
+            console.log('Mostrando ROUND_FINISHED');
             elements.roundFinished.style.display = 'block';
             break;
         case 'GAME_FINISHED':
+            console.log('Mostrando GAME_FINISHED');
             elements.gameFinished.style.display = 'block';
             renderFinalScoreboard();
             break;
+        default:
+            console.warn('Estado desconhecido:', gameState);
     }
 }
 
@@ -345,6 +367,14 @@ function renderFinalScoreboard() {
 }
 
 // ========== AÇÕES DO JOGO ==========
+
+function requestCurrentState() {
+    if (!stompClient) return;
+
+    stompClient.send('/app/request-state', {}, JSON.stringify({
+        roomCode: ROOM_CODE
+    }));
+}
 
 function startGame() {
     if (!stompClient) return;

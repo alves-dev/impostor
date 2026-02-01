@@ -123,6 +123,23 @@ public class GameSocketController {
         }
     }
 
+    /**
+     * Solicita o estado atual da sala.
+     * Usado quando um jogador conecta/reconecta.
+     */
+    @MessageMapping("/request-state")
+    public void requestState(RoomActionRequest request) {
+        try {
+            Room room = roomManager.getRoomByCode(request.getRoomCode());
+
+            // Envia o estado atualizado da sala
+            broadcastRoomState(room);
+
+        } catch (Exception e) {
+            sendError(request.getRoomCode(), e.getMessage());
+        }
+    }
+
     // Métodos auxiliares para envio de mensagens
 
     /**
