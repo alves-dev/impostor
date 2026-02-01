@@ -303,20 +303,29 @@ function renderVotingButtons() {
 
     elements.votingPlayers.innerHTML = '';
 
+    // Verifica se o jogador local já votou (baseado no estado vindo do servidor)
+    const myPlayer = roomState.players.find(p => p.id === PLAYER_ID);
+    const alreadyVoted = myPlayer && myPlayer.hasVoted;
+
     roomState.players.forEach(player => {
-        // Não pode votar em si mesmo
         if (player.id === PLAYER_ID) return;
 
         const button = document.createElement('button');
         button.className = 'vote-button';
-        button.textContent = player.name;
-        button.onclick = () => vote(player.id);
+        if (alreadyVoted) button.classList.add('voted');
 
-        // Marcar se já votou neste jogador
-        const myPlayer = roomState.players.find(p => p.id === PLAYER_ID);
-        if (myPlayer && myPlayer.hasVoted) {
-            button.disabled = true;
-        }
+        button.textContent = player.name;
+        button.disabled = alreadyVoted;
+
+        button.onclick = () => {
+            // Feedback visual imediato
+            const allButtons = elements.votingPlayers.querySelectorAll('.vote-button');
+            allButtons.forEach(btn => btn.disabled = true); // Trava todos
+            button.classList.add('voted'); // Destaca o escolhido
+
+            // Envia o voto
+            vote(player.id);
+        };
 
         elements.votingPlayers.appendChild(button);
     });
