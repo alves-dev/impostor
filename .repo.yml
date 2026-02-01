@@ -2,7 +2,7 @@ schema: v1
 
 repository:
   title: Impostor
-  description: Uma aplicação web simples para o jogo impostor
+  description: Uma aplicação web simples para o jogo 'impostor'
   license: NO-LICENSE
   type: code
   topics:
