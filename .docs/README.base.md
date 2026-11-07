@@ -1,4 +1,0 @@
-<!-- TEMPLATE:header -->
-
-
-<!-- TEMPLATE:footer -->

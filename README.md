@@ -1,8 +1,3 @@
-<!--
-template_name=header-code
-template_version=v1
--->
-
 <h1 align="center" style="color:#F1F5F9;">
   Impostor
 </h1>
@@ -18,18 +13,58 @@ template_version=v1
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/status-development-10B981?style=flat-square"/>
+  <img src="https://img.shields.io/badge/status-archived-64748B?style=flat-square"/>
 </p>
 
 <hr/>
 
+<p align="center" style="background-color:#FEF3C7; border:1px solid #F59E0B; border-radius:8px; color:#92400E; padding:12px;">
+  ⚠️ <strong>REPOSITÓRIO ARQUIVADO</strong><br/>
+  Este projeto foi encerrado e não receberá mais manutenção, correções ou novas funcionalidades.
+</p>
+
+## Sobre o projeto
+
+Aplicação web multiplayer simples para partidas do jogo **Impostor**, desenvolvida com Java, Spring Boot, Thymeleaf e WebSocket/STOMP.
+
+### Funcionalidades
+
+- Criar uma sala com nome personalizado.
+- Entrar em uma sala usando um código curto.
+- Aguardar jogadores e iniciar a partida como proprietário da sala.
+- Distribuir palavras e identificar o impostor durante as rodadas.
+- Votar, exibir o resultado e acompanhar a pontuação dos jogadores.
+
+## Como executar localmente
+
+Requisitos: Java 21.
+
+```bash
+GRADLE_USER_HOME=/tmp/impostor-gradle ./gradlew bootRun
+```
+
+Depois, acesse [http://localhost:8080](http://localhost:8080).
+
+Para executar os testes:
+
+```bash
+GRADLE_USER_HOME=/tmp/impostor-gradle ./gradlew test
+```
 
 
+### Tela inicial
 
-<!--
-template_name=footer-default
-template_version=v1
--->
+![Tela inicial do Impostor](docs/screenshots/home.png)
+
+### Sala criada
+
+![Sala do Impostor aguardando jogadores](docs/screenshots/room.png)
+
+## Status de arquivamento
+
+Projeto mantido apenas como registro de uma implementação experimental. O repositório está arquivado e não receberá mais manutenção, correções ou novas funcionalidades.
+
+Não há persistência de dados ou autenticação; o estado das salas é mantido em memória enquanto a aplicação está em execução.
 
 ---
 
@@ -58,6 +93,6 @@ template_version=v1
 
 <p align="center">
   <sub style="color:#94A3B8;">
-    Atualizado em 2026-02-01 18:20
+    Atualizado em 2026-11-07
   </sub>
 </p>
